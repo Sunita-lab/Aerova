@@ -1,9 +1,9 @@
-from pyclbr import Class
+
 
 from django.db import models
 
 # Create your models here.
-class Flights(models.Model):
+class Flight(models.Model):
     flight_number = models.CharField(max_length = 10)
     origin = models.CharField(max_length = 100)
     destination = models.CharField(max_length = 100)
