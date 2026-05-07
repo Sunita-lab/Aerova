@@ -18,3 +18,13 @@ class FlightListView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+    
+class FlightDetailView(APIView):
+    def get(self, request, pk):
+        try:
+            flight = Flight.objects.get(pk=pk)
+        except Flight.DoesNotExist:
+            return Response(status=404)
+        
+        serializer = FlightSerializer(flight)
+        return Response(serializer.data)    
