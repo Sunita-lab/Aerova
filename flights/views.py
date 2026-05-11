@@ -27,4 +27,26 @@ class FlightDetailView(APIView):
             return Response(status=404)
         
         serializer = FlightSerializer(flight)
-        return Response(serializer.data)    
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        try:
+            flight = Flight.objects.get(pk=pk)
+        except Flight.DoesNotExist:
+            return Response(status = 404)
+
+        serializer = FlightSerializer(flight, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+    
+    
+    def delete(self, request, pk):
+        try:
+            flight = Flight.objects.get(pk=pk)
+        except Flight.DoesNotExist:
+            return Response(status=404)
+
+        flight.delete()
+        return Response(status=204)        
